@@ -1,0 +1,27 @@
+O
+H	pid	asof
+D	81260470	1162863088
+H	searchpattern
+D	*
+H	pid	nick
+D	82420394	a$$$
+D	81339995	A$$|Mudsy
+D	81465685	A$$A$$1N
+D	81466385	A$$A$$1N.
+D	81373584	a$$a$$in
+D	83288743	A$$A$$IN1793
+D	81885985	A$$A$$IN187
+D	81607449	A$$A$$IN444
+D	82852033	A$$a$$inBlade
+D	81259095	A$$Annihilator
+D	82972235	A$$AS$IN
+D	82293340	A$$asiN8toR
+D	82598628	A$$asinSniper
+D	82495250	A$$aultmaster
+D	82166195	a$$blaster
+D	81315175	A$$Grinder
+D	81940739	A$$h@lli@
+D	81797133	A$$holio
+D	83352351	A$$I<er@$in
+D	81838773	A$$INATOR
+$	426	$

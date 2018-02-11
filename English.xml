@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<news>
+	<newsitem header="New User Information" imageUrl="http://thmods.com/insert.jpg">
+		<p>NEW SERVER IP</p>
+		<p>DETHKLOK IP: 68.232.163.223 Port:16567</p>
+		<p>The server list is broken. You CANNOT connect using the browser.</p>
+		<p>You will need to connect by ip the first time.</p>
+		<p>After the first time, you can go to history and add it as a favorite.</p>
+		<p>You should remove all your other favorites, as they are useless.</p>
+	</newsitem>
+	<newsitem header="Acknowledgements">
+		<p>Mitcrellim: </p>
+		<p>H.Kentwell: </p>
+		<p>Mando75: </p>
+		<p>spaMgobliN: </p>
+	</newsitem>
+</news>
