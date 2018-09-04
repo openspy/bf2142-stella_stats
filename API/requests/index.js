@@ -1,7 +1,7 @@
 module.exports = function(app) {
     
     app.get('/getawardsinfo.aspx', require('./GetAwardsInfo'));
-    app.get('/getbackendinfo.aspx', require('./GetBackendinfo'));
+    app.get('/getbackendinfo.aspx', require('./GetBackendInfo'));
     app.get('/getleaderboard.aspx', require('./GetLeaderboard'));
 
     app.get('/getplayerinfo.aspx', require('./GetPlayerInfo'));
