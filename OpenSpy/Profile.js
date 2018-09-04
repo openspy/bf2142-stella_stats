@@ -13,7 +13,7 @@ Profile.prototype.getProfileById = function(profileid) {
     return new Promise(function(resolve, reject) {
         var request_body = {"mode": "profile_search", profile: {id: profileid}, user: {}};
         if(this.namespaceid !== undefined) {
-            request_body.profile.namespaceid = this.namespaceid;
+            request_body.profile.namespaceids = [this.namespaceid];
         }
         if(this.partnercode !== undefined) {
             request_body.user.partnercode = this.partnercode;
@@ -34,14 +34,14 @@ Profile.prototype.getProfileById = function(profileid) {
                 resolve(null);
             }
         }, reject)
-    });
+    }.bind(this));
 }
 
 Profile.prototype.searchProfileByUniquenick = function(uniquenick_partial) {
     return new Promise(function(resolve, reject) {
         var request_body = {"mode": "profile_search", profile: {uniquenick_like: uniquenick_partial}, user: {}};
         if(this.namespaceid !== undefined) {
-            request_body.profile.namespaceid = this.namespaceid;
+            request_body.profile.namespaceids = [this.namespaceid];
         }
         if(this.partnercode !== undefined) {
             request_body.user.partnercode = this.partnercode;
@@ -62,6 +62,6 @@ Profile.prototype.searchProfileByUniquenick = function(uniquenick_partial) {
                 resolve(null);
             }
         }, reject)
-    });
+    }.bind(this));
 }
 module.exports = Profile;
