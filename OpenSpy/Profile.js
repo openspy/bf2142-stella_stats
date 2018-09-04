@@ -1,6 +1,4 @@
 var request = require('request-promise');
-const USERPROFILE_API_KEY = "6f3c0f25-c931-4fd8-b724-e3a534d6cc44";
-const OPENSPY_API_ENDPOINT = "http://api.openspy.net";
 function Profile(options) {
     if(options) {
         if(options.namespaceid !== undefined) {
@@ -20,10 +18,10 @@ Profile.prototype.getProfileById = function(profileid) {
         if(this.partnercode !== undefined) {
             request_body.user.partnercode = this.partnercode;
         }
-        var headers = {'Content-Type': 'application/json', "APIKey": USERPROFILE_API_KEY};
+        var headers = {'Content-Type': 'application/json', "APIKey": global.API_KEY};
 
         var options = {
-            uri: OPENSPY_API_ENDPOINT + "/backend/userprofile",
+            uri: global.API_ENDPOINT + "/backend/userprofile",
             method: "POST",
             body: request_body,
             headers: headers,
@@ -48,10 +46,10 @@ Profile.prototype.searchProfileByUniquenick = function(uniquenick_partial) {
         if(this.partnercode !== undefined) {
             request_body.user.partnercode = this.partnercode;
         }
-        var headers = {'Content-Type': 'application/json', "APIKey": USERPROFILE_API_KEY};
+        var headers = {'Content-Type': 'application/json', "APIKey": global.API_KEY};
 
         var options = {
-            uri: OPENSPY_API_ENDPOINT + "/backend/userprofile",
+            uri: global.API_ENDPOINT + "/backend/userprofile",
             method: "POST",
             body: request_body,
             headers: headers,

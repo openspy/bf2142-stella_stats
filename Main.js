@@ -3,6 +3,10 @@ const app = express()
 const url = require('url');
 const ErrorResponse = require('./API/ErrorResponse');
 
+
+global.API_KEY = process.env.API_KEY;
+global.API_ENDPOINT = process.env.API_ENDPOINT;
+
 global.PARTNERCODE = 20;
 global.PROFILE_NAMESPACEID = 2;
 global.ACCOUNT_NAMESPACEID = 1;
@@ -40,4 +44,4 @@ app.use(function(req, res, next) {
 app.use(errorHandler);
   
 
-app.listen(process.env.PORT || 80, () => console.log('Example app listening on port 3000!'))
+app.listen(process.env.PORT || 3000, () => console.log('Server running on port: ' + process.env.PORT || 3000))

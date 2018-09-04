@@ -10,7 +10,7 @@ module.exports = function(req, res, next) {
 			}
 		}
 		var send_entries = [
-			[{"pid": req.profile.id, "asof": req.currentTime}],
+			[{"pid": req.profileid, "asof": req.currentTime}],
 			[{"searchpattern": "*"}],
 			results
 		];

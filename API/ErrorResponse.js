@@ -9,6 +9,14 @@ ErrorResponse.prototype.NotImplementedError = function() {
     return errorData;
 }
 
+ErrorResponse.prototype.InvalidSessionError = function() {
+    Error.captureStackTrace(this, this.constructor);
+    var errorData = {};
+    errorData.errorCode = 400;
+    errorData.errorMessage = "Invalid Session Error";
+    return errorData;
+}
+
 ErrorResponse.prototype.NotFoundError = function() {
     Error.captureStackTrace(this, this.constructor);
     var errorData = {};
