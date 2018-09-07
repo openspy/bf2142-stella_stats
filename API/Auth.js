@@ -21,7 +21,6 @@ Auth.prototype.registerMiddleware = function(req, res, next) {
     Profile.getProfileById(req.profileid).then(function(profile) {
         req.profile = profile;
         if(test_auth_session) { //temporary, due to auth session being cut off
-            console.log("USER", req.profile);
             Session.TestSessionByUserId(req.profile.user.id, req.queryParams.gsa).then(function(valid) {
                 
                 if(!valid) {
@@ -35,7 +34,7 @@ Auth.prototype.registerMiddleware = function(req, res, next) {
             req.session_valid = false;
             next();
         }
-    })
+    }).catch(next);
 	
 }
 module.exports = Auth;
