@@ -24,5 +24,11 @@ ErrorResponse.prototype.NotFoundError = function() {
     errorData.errorMessage = "Not Found";
     return errorData;
 }
-
-module.exports = new ErrorResponse();
+ErrorResponse.prototype.SystemError = function(original_error) {
+    Error.captureStackTrace(this, this.constructor);
+    var errorData = {};
+    errorData.errorCode = 500;
+    errorData.errorMessage = "System Error";
+    return errorData;
+}
+module.exports = ErrorResponse;

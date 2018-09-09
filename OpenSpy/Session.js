@@ -15,7 +15,6 @@ Session.prototype.TestSessionByProfileId = function(profileid, session_key) {
             json: true
         };
         request.post(options).then(function(response) {
-            console.log("RESPONSE", response.valid);
             resolve(response && response.valid);
         }, reject)
     });

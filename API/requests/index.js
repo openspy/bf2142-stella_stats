@@ -16,4 +16,6 @@ module.exports = function(app) {
     app.get('/selectunlock.aspx', require('./SelectUnlock'));
 
     app.get('/validateplayer.aspx', require('./ValidatePlayer'));
+
+    require('./News')(app);
 };

@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const url = require('url');
 const ErrorResponse = require('./API/ErrorResponse');
-
+const ErrorRespondeInstance = new ErrorResponse;
 
 global.API_KEY = process.env.API_KEY;
 global.API_ENDPOINT = process.env.API_ENDPOINT;
@@ -23,11 +23,15 @@ var APIRequestHandler = require('./API/requests');
 
 app.all("*", function(req, res, next) {
     req.queryParams = url.parse(req.originalUrl, true).query;
+    console.log("req", req.originalUrl);
 	next();
 })
 
 
 function errorHandler (err, req, res, next) {
+    if (!(err instanceof ErrorResponse)) {
+        err = ErrorRespondeInstance.SystemError(err);
+    }
 	ResponseWriter.sendError(res, err);
 }
 
@@ -38,7 +42,7 @@ APIRequestHandler(app);
 
 
 app.use(function(req, res, next) {
-    next(ErrorResponse.NotFoundError());
+    next(ErrorRespondeInstance.NotFoundError());
 });
 
 app.use(errorHandler);

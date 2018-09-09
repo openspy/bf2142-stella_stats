@@ -24,6 +24,7 @@ ResponseWriter.prototype.sendResponse = function(res, data) {
 					res.write(key_string); total += key_string.length;
 				}
 				res.write('\n'); total += 2;
+				if(data[i][0][keys[0]] == null) continue;
 				for(var j=0;j<data[i].length;j++) {
 					res.write('D\t'); total += 2;
 					for(var k=0;k<keys.length;k++) {
