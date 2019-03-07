@@ -11,17 +11,20 @@ function Profile(options) {
 }
 Profile.prototype.getProfileById = function(profileid) {
     return new Promise(function(resolve, reject) {
-        var request_body = {"mode": "profile_search", profile: {id: profileid}, user: {}};
+        var request_body = {};
+        request_body["id"] = profileid;
+
         if(this.namespaceid !== undefined) {
-            request_body.profile.namespaceids = [this.namespaceid];
+            request_body.namespaceids = [this.namespaceid];
         }
         if(this.partnercode !== undefined) {
-            request_body.user.partnercode = this.partnercode;
+            request_body.partnercode = this.partnercode;
         }
+
         var headers = {'Content-Type': 'application/json', "APIKey": global.API_KEY};
 
         var options = {
-            uri: global.API_ENDPOINT + "/backend/userprofile",
+            uri: global.API_ENDPOINT + "/v1/Profile/lookup",
             method: "POST",
             body: request_body,
             headers: headers,
@@ -39,25 +42,28 @@ Profile.prototype.getProfileById = function(profileid) {
 
 Profile.prototype.searchProfileByUniquenick = function(uniquenick_partial) {
     return new Promise(function(resolve, reject) {
-        var request_body = {"mode": "profile_search", profile: {uniquenick_like: uniquenick_partial}, user: {}};
+        var request_body = {};
+        request_body["uniquenick_like"] = uniquenick_partial;
+
         if(this.namespaceid !== undefined) {
-            request_body.profile.namespaceids = [this.namespaceid];
+            request_body.namespaceids = [this.namespaceid];
         }
         if(this.partnercode !== undefined) {
-            request_body.user.partnercode = this.partnercode;
+            request_body.partnercode = this.partnercode;
         }
+
         var headers = {'Content-Type': 'application/json', "APIKey": global.API_KEY};
 
         var options = {
-            uri: global.API_ENDPOINT + "/backend/userprofile",
+            uri: global.API_ENDPOINT + "/v1/Profile/lookup",
             method: "POST",
             body: request_body,
             headers: headers,
             json: true
         };
         request.post(options).then(function(profiles) {
-            if(profiles && profiles.profiles) {
-                resolve(profiles.profiles);
+            if(profiles && profiles.profiles && profiles.profiles.length > 0) {
+                resolve(profiles.profiles[0]);
             } else {
                 resolve(null);
             }

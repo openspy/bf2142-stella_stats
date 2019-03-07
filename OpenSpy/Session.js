@@ -3,39 +3,39 @@ function Session(options) {
 }
 Session.prototype.TestSessionByProfileId = function(profileid, session_key) {
     return new Promise(function(resolve, reject) {
-        var request_body = {"mode": "test_session_profileid", profileid: profileid, session_key: session_key};
+        var request_body = {"password": session_key};
 
         var headers = {'Content-Type': 'application/json', "APIKey": global.API_KEY};
 
         var options = {
-            uri: global.API_ENDPOINT + "/backend/auth",
+            uri: global.API_ENDPOINT + "/v1/Auth/GetSession",
             method: "POST",
             body: request_body,
             headers: headers,
             json: true
         };
         request.post(options).then(function(response) {
-            resolve(response && response.valid);
-        }, reject)
+            resolve(response && response.profile && response.profile.id == profileid);
+        }, reject);
     });
 }
 
 Session.prototype.TestSessionByUserId = function(userid, session_key) {
     return new Promise(function(resolve, reject) {
-        var request_body = {"mode": "test_session", userid: userid, session_key: session_key};
+        var request_body = {"password": session_key};
 
         var headers = {'Content-Type': 'application/json', "APIKey": global.API_KEY};
 
         var options = {
-            uri: global.API_ENDPOINT + "/backend/auth",
+            uri: global.API_ENDPOINT + "/v1/Auth/GetSession",
             method: "POST",
             body: request_body,
             headers: headers,
             json: true
         };
         request.post(options).then(function(response) {
-            resolve(response && response.valid);
-        }, reject)
+            resolve(response && response.user && response.user.id == userid);
+        }, reject);
     });
 }
 module.exports = Session;
