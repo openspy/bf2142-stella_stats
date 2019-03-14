@@ -6,10 +6,10 @@ const ErrorRespondeInstance = new ErrorResponse;
 
 global.API_KEY = process.env.API_KEY;
 global.API_ENDPOINT = process.env.API_ENDPOINT;
-
 global.PARTNERCODE = 20;
 global.PROFILE_NAMESPACEID = 2;
 global.ACCOUNT_NAMESPACEID = 1;
+global.OPENSPY_GAMEID = 1324;
 
 Number.prototype.pad = function(size) {
     var s = String(this);

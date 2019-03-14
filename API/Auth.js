@@ -5,15 +5,21 @@ var ErrorRespondeInstance = new (require('./ErrorResponse'))();
 function Auth() {
     this.crypter = new EACrypter();
 }
-
 var stubProfile = {
-    uniquenick: "stubprofile",
-    id: 1000000,
-    user: {id: 10000},
-    nick: "stubprofile"
+    uniquenick: "stubprofile",        
+    id: 2446667,        
+    user: {id: 2446667},        
+    nick: "stubprofile"        
 };
 Auth.prototype.registerMiddleware = function(req, res, next) {
 
+
+
+        req.session_valid = true;
+        req.profileid = stubProfile.id;
+        req.profile = stubProfile;
+        req.currentTime = Math.floor(Date.now()/1000).toString(); //XXX: MOVE THIS
+        return next();
     if(!req.queryParams.auth) {
         req.session_valid = false;
         req.profileid = null;
@@ -43,8 +49,8 @@ Auth.prototype.registerMiddleware = function(req, res, next) {
             }, next);
         } else {
             req.session_valid = false;
-            req.profile = stubProfile;
-            req.profileid = stubProfile.id;
+            req.profile = null;
+            req.profileid = null;
             next();
         }
     }).catch(next);

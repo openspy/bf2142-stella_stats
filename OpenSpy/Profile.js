@@ -62,8 +62,8 @@ Profile.prototype.searchProfileByUniquenick = function(uniquenick_partial) {
             json: true
         };
         request.post(options).then(function(profiles) {
-            if(profiles && profiles.profiles && profiles.profiles.length > 0) {
-                resolve(profiles.profiles[0]);
+            if(profiles && profiles.length > 0) {
+                resolve(profiles);
             } else {
                 resolve(null);
             }

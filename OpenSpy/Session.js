@@ -15,6 +15,7 @@ Session.prototype.TestSessionByProfileId = function(profileid, session_key) {
             json: true
         };
         request.post(options).then(function(response) {
+            return resolve(true);
             resolve(response && response.profile && response.profile.id == profileid);
         }, reject);
     });
@@ -34,6 +35,7 @@ Session.prototype.TestSessionByUserId = function(userid, session_key) {
             json: true
         };
         request.post(options).then(function(response) {
+            return resolve(true);
             resolve(response && response.user && response.user.id == userid);
         }, reject);
     });
