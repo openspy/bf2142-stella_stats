@@ -11,6 +11,7 @@ module.exports = function(req, res, next) {
             write_string += str;
             
         }
+        write_string += 'rankSettings.save\n';
         var config_string = 'swiffHost.setLatestGameVersion 1.10.112.0\n' + write_string;
         for(var i =0;i<settings.awards.length;i++) {
             var award_data = settings.awards[i];
