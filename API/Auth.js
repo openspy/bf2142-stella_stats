@@ -5,21 +5,8 @@ var ErrorRespondeInstance = new (require('./ErrorResponse'))();
 function Auth() {
     this.crypter = new EACrypter();
 }
-var stubProfile = {
-    uniquenick: "stubprofile",        
-    id: 2446667,        
-    user: {id: 2446667},        
-    nick: "stubprofile"        
-};
 Auth.prototype.registerMiddleware = function(req, res, next) {
 
-
-
-        req.session_valid = true;
-        req.profileid = stubProfile.id;
-        req.profile = stubProfile;
-        req.currentTime = Math.floor(Date.now()/1000).toString(); //XXX: MOVE THIS
-        return next();
     if(!req.queryParams.auth) {
         req.session_valid = false;
         req.profileid = null;

@@ -23,13 +23,14 @@ var APIRequestHandler = require('./API/requests');
 
 app.all("*", function(req, res, next) {
     req.queryParams = url.parse(req.originalUrl, true).query;
-    console.log("req", req.originalUrl);
 	next();
 })
-
+app.get('/', function(req, res, next) {
+    res.end();
+});
 
 function errorHandler (err, req, res, next) {
-    if (!(err instanceof ErrorResponse)) {
+    if (err.errorCode === undefined) {
         err = ErrorRespondeInstance.SystemError(err);
     }
 	ResponseWriter.sendError(res, err);

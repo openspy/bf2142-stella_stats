@@ -31,8 +31,8 @@ Profile.prototype.getProfileById = function(profileid) {
             json: true
         };
         request.post(options).then(function(profiles) {
-            if(profiles && profiles.profiles && profiles.profiles.length > 0) {
-                resolve(profiles.profiles[0]);
+            if(profiles && profiles.length > 0) {
+                resolve(profiles[0]);
             } else {
                 resolve(null);
             }

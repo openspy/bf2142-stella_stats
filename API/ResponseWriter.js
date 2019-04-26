@@ -6,6 +6,7 @@ function ResponseWriter() {
 ResponseWriter.prototype.sendError = function(res, error) {
 	var total = 0;
 	var send_str = "E\t" + error.errorCode + "\n";
+	res.status(error.errorCode);
 	res.write(send_str); total += send_str.length;
 	res.write('$\t' + total + '\t$');
 	res.end();
