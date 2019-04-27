@@ -37,7 +37,10 @@ module.exports = function(req, res, next) {
         if(progress_data == null) {
             progress_data = {data: []};
         }
-        var send_results = [self_player];
+        var send_results = [];
+        if(self_player !== null) {
+            send_results.push(self_player);
+        }
         for(var i=0;i<progress_data.data.length;i++) {
             send_results.push(progress_data.data[i]);
         }
@@ -53,14 +56,14 @@ module.exports = function(req, res, next) {
     leaderboardOptions.pageSize = req.query.after || "17";
     leaderboardOptions.pageSize = parseInt(leaderboardOptions.pageSize);
 
+    if(req.query.pid) {
+        var pid = parseInt(req.query.pid);
+        leaderboardOptions.filterData = {};
+        leaderboardOptions.filterData.pid = [pid];
+        return Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, null));
+    }
     fetchCurrentPlayer().then(function(playerData) {
-        if(req.query.pid) {
-            var pid = parseInt(req.query.pid);
-            leaderboardOptions.filterData = {};
-            leaderboardOptions.filterData.pid = [pid];
-            Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, playerData));
-        }
-        else if(req.query.dogTagFilter == "1") {
+        if(req.query.dogTagFilter == "1") {
             PlayerProgress.FetchPlayerProgressData(req.profile.id, "player_dogtags").then(function(progress_data) {
                 var dogtags = Object.keys(progress_data);
                 var pids = [];
@@ -89,7 +92,4 @@ module.exports = function(req, res, next) {
             Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, playerData));
         }  
     })
-
-
-
 };
