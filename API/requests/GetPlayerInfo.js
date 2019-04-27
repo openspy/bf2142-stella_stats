@@ -13,12 +13,16 @@ module.exports = function(req, res, next) {
 		,{"UnlockID": "516"}
 		,{"UnlockID": "525"}
 	];
-	var base_data = {"p.pid":req.profile.id,"subaccount":req.profile.uniquenick};
+
 	var profileid = req.query.pid || req.profile.id;
+
+
+
+	
 
     PlayerProgress.FetchPlayerProgressData(profileid, "player_info").then(function(progress_data) {
 		if(progress_data == null) progress_data = {};
-		var player_data = Object.assign({}, base_data, progress_data);
+		var player_data = Object.assign({"p.pid": profileid, "subaccount": progress_data.nick}, progress_data);
 		var send_entries = [[{"asof":req.currentTime,"cb":"client"}],
 		[player_data],
 		unlock_ids];

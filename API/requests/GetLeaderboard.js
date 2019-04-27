@@ -15,8 +15,14 @@ function filterPids(filter, pids) {
 }
 module.exports = function(req, res, next) {
     var mode = req.query.type;
+    var id = req.query.id || null;
+    if(id !== null) {
+        mode += "_" + id;
+    }
     var offset = req.query.pos || "1";
     var leaderboardOptions = {};
+
+    
 
     var fetchCurrentPlayer = function() {
         return new Promise(function(resolve, reject) {
@@ -48,7 +54,13 @@ module.exports = function(req, res, next) {
     leaderboardOptions.pageSize = parseInt(leaderboardOptions.pageSize);
 
     fetchCurrentPlayer().then(function(playerData) {
-        if(req.query.dogTagFilter == "1") {
+        if(req.query.pid) {
+            var pid = parseInt(req.query.pid);
+            leaderboardOptions.filterData = {};
+            leaderboardOptions.filterData.pid = [pid];
+            Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, playerData));
+        }
+        else if(req.query.dogTagFilter == "1") {
             PlayerProgress.FetchPlayerProgressData(req.profile.id, "player_dogtags").then(function(progress_data) {
                 var dogtags = Object.keys(progress_data);
                 var pids = [];
