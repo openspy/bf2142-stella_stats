@@ -15,12 +15,12 @@ module.exports = function(req, res, next) {
 	];
 
 	var profileid = req.query.pid || req.profile.id;
-
-
-
-	
-
-    PlayerProgress.FetchPlayerProgressData(profileid, "player_info").then(function(progress_data) {
+	var mode = req.query.mode || null;
+	var pageKey = "player_info";
+	if(mode != null) {
+		pageKey += "_" + mode;
+	}
+    PlayerProgress.FetchPlayerProgressData(profileid, pageKey).then(function(progress_data) {
 		if(progress_data == null) progress_data = {};
 		var player_data = Object.assign({"p.pid": profileid, "subaccount": progress_data.nick}, progress_data);
 		var send_entries = [[{"asof":req.currentTime,"cb":"client"}],
