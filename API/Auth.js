@@ -36,8 +36,8 @@ Auth.prototype.registerMiddleware = function(req, res, next) {
             }, next);
         } else {
             req.session_valid = false;
-            req.profile = null;
-            req.profileid = null;
+            //req.profile = null;
+            //req.profileid = null;
             next();
         }
     }).catch(next);
