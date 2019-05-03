@@ -29,7 +29,7 @@ module.exports = function(req, res, next) {
             var fetchOptions = {baseKey: mode, filterData: {}};
             fetchOptions.filterData.pid = [ req.profile.id ];
             return Leaderboard.FetchLeaderboardData(fetchOptions).then(function(results) {
-                if(results == null || results.length == 0) {
+                if(results == null || results.data == null || results.data.length == 0) {
                     PlayerProgress.FetchPlayerProgressData(req.profile.id, "player_info").then(function(playerProgress) {
                         var result = {};
                         result.pid = req.profile.id;
@@ -39,8 +39,7 @@ module.exports = function(req, res, next) {
                         result.rank = "0";
                         result.Vet = "0";
                         resolve(result);
-                    }, reject);    
-
+                    }, reject);
                 } else {
                     resolve(results.data[0]);
                 }
