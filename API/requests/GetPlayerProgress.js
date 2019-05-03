@@ -7,5 +7,6 @@ module.exports = function(req, res, next) {
 
     PlayerProgress.FetchPlayerProgressData(req.profile.id, "player_progress").then(function(progress_data) {
         req.sendResponse(res, [header, progress_data[req.query.mode]]);
-    });
+        next();
+    }, next);
 };

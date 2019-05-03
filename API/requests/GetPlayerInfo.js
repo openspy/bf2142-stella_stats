@@ -20,11 +20,10 @@ module.exports = function(req, res, next) {
 		pageKey += "_" + mode;
 	}
     PlayerProgress.FetchPlayerProgressData(profileid, pageKey).then(function(progress_data) {
-		if(progress_data == null) progress_data = {};
-		var player_data = Object.assign({}, progress_data);
-		var send_entries = [[{"asof":req.currentTime,"cb":"client"}],
-		[player_data],
-		 unlock_ids];
-		req.sendResponse(res, send_entries);
-    });
+			if(progress_data == null) progress_data = {};
+			var player_data = Object.assign({}, progress_data);
+			var send_entries = [[{"asof":req.currentTime,"cb":"client"}], [player_data], unlock_ids];
+			req.sendResponse(res, send_entries);
+			next();
+    }, next);
 };

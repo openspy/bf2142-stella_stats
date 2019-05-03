@@ -14,4 +14,5 @@ module.exports = function(req, res, next) {
 	];
 	var send_entries = [[{"asof":req.currentTime,"pid":req.profile.id, "nick": req.profile.uniquenick}], [{"AvCred": "0"}], unlock_ids];
 	req.sendResponse(res, send_entries);
+	next();
 };
