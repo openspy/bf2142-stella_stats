@@ -1,7 +1,7 @@
 var Leaderboard = new (require('../../OpenSpy/Leaderboard'))({namespaceid: global.PROFILE_NAMESPACEID, partnercode: global.PARTNERCODE});
 var PlayerProgress = new (require('../../OpenSpy/PlayerProgress'))({namespaceid: global.PROFILE_NAMESPACEID, partnercode: global.PARTNERCODE});
 //&ccFilter=US&buddiesFilter=10017,11012,11589&dogTagFilter=1
-////baseKey, pageOffset, pageSize, filterData
+
 function filterPids(filter, pids) {
     var split_pids = filter.split(',');
     var result = [];
@@ -29,7 +29,22 @@ module.exports = function(req, res, next) {
             var fetchOptions = {baseKey: mode, filterData: {}};
             fetchOptions.filterData.pid = [ req.profile.id ];
             return Leaderboard.FetchLeaderboardData(fetchOptions).then(function(results) {
-                resolve(results.data[0]);
+                if(results == null || results.length == 0) {
+                    PlayerProgress.FetchPlayerProgressData(req.profile.id, "player_info").then(function(playerProgress) {
+                        var result = {};
+                        result.pid = req.profile.id;
+                        result.nick = req.profile.uniquenick;
+                        result.playerrank = ""+(playerProgress.rnk || "0");
+                        result.countrycode = req.profile.countrycode || "US";
+                        result.rank = "0";
+                        result.Vet = "0";
+                        resolve(result);
+                    }, reject);    
+
+                } else {
+                    resolve(results.data[0]);
+                }
+                
             });
         });
     }

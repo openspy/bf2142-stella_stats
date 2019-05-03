@@ -1,7 +1,7 @@
 var Profile = new (require('../OpenSpy/Profile'))();
 var Session = new (require('../OpenSpy/Session'))();
 var EACrypter = require('../EACrypter');
-var ErrorRespondeInstance = new (require('./ErrorResponse'))();
+
 function Auth() {
     this.crypter = new EACrypter();
 }
