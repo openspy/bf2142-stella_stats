@@ -15,6 +15,5 @@ module.exports = function(req, res, next) {
 			results
 		];
 		req.sendResponse(res, send_entries);
-		next();
 	}, next);
 };

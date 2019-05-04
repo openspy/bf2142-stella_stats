@@ -24,6 +24,5 @@ module.exports = function(req, res, next) {
 			var player_data = Object.assign({}, progress_data);
 			var send_entries = [[{"asof":req.currentTime,"cb":"client"}], [player_data], unlock_ids];
 			req.sendResponse(res, send_entries);
-			next();
     }, next);
 };
