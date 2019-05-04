@@ -2,6 +2,9 @@ var Leaderboard = new (require('../../OpenSpy/Leaderboard'))({namespaceid: globa
 var PlayerProgress = new (require('../../OpenSpy/PlayerProgress'))({namespaceid: global.PROFILE_NAMESPACEID, partnercode: global.PARTNERCODE});
 //&ccFilter=US&buddiesFilter=10017,11012,11589&dogTagFilter=1
 
+const ErrorResponse = require('../../API/ErrorResponse');
+const ErrorRespondeInstance = new ErrorResponse;
+
 function filterPids(filter, pids) {
     var split_pids = filter.split(',');
     var result = [];
@@ -52,13 +55,15 @@ module.exports = function(req, res, next) {
             progress_data = {data: []};
         }
         var send_results = [];
-        if(self_player !== null) {
-            send_results.push(self_player);
-        }
         for(var i=0;i<progress_data.data.length;i++) {
             send_results.push(progress_data.data[i]);
         }
-        var send_entries = [[{"size":progress_data.total, "asof":req.currentTime}], send_results];
+
+        var send_entries = [[{"size": progress_data.total, "asof":req.currentTime}]];
+        if(self_player != null) {
+            send_entries.push([self_player]);
+        }
+        send_entries.push(send_results);
         req.sendResponse(res, send_entries);
     };
 
@@ -74,7 +79,16 @@ module.exports = function(req, res, next) {
         var pid = parseInt(req.query.pid);
         leaderboardOptions.filterData = {};
         leaderboardOptions.filterData.pid = [pid];
-        return Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, null));
+        return fetchCurrentPlayer().then(function(playerData) {
+            return Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, playerData));
+        });
+        /*return Leaderboard.FetchLeaderboardData(leaderboardOptions).then(function(playerData) {
+            if(playerData == null || playerData.data == null || playerData.data.length == 0) {
+                return next(ErrorRespondeInstance.NoDataError());
+            }
+            send_entries = [[playerData.data[0]]];
+            return req.sendResponse(res, send_entries);
+        });*/
     }
     fetchCurrentPlayer().then(function(playerData) {
         if(req.query.dogTagFilter == "1") {

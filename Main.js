@@ -30,7 +30,7 @@ app.get('/', function(req, res, next) {
 });
 
 function errorHandler (err, req, res, next) {
-    if (err.errorCode === undefined) {
+    if (err.statusCode === undefined) {
         err = ErrorRespondeInstance.SystemError(err);
     }
 	ResponseWriter.sendError(res, err);
