@@ -7,6 +7,7 @@ module.exports = function(app) {
     app.get('/getplayerinfo.aspx', require('./GetPlayerInfo'));
     app.get('/getplayerprogress.aspx', require('./GetPlayerProgress'));
     
+    app.get('/clearranknotification.aspx', require('./ClearRankNotification'));
     
     app.get('/getrankinfo.aspx', require('./GetRankInfo'));    
     app.get('/getunlocksinfo.aspx', require('./GetUnlocksInfo'));

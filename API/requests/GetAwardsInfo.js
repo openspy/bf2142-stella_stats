@@ -11,5 +11,5 @@ module.exports = function(req, res, next) {
             progress_data
         ];
         req.sendResponse(res, award_data);
-    });
+    }, next);
 };

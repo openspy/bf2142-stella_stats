@@ -29,7 +29,7 @@ module.exports = function(req, res, next) {
             [{"config": config_string}],
         ];
         req.sendResponse(res, send_entries);
-    });
+    }, next);
  
     
 };

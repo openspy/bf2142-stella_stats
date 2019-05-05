@@ -1,6 +1,6 @@
 var PlayerProgress = new (require('../../OpenSpy/PlayerProgress'))({namespaceid: global.PROFILE_NAMESPACEID, partnercode: global.PARTNERCODE});
 const ErrorResponse = require('../../API/ErrorResponse');
-const ErrorRespondeInstance = new ErrorResponse;
+const ErrorResponseInstance = new ErrorResponse;
 	//unlock format: page - slot - highest (2,2,2) = 2nd page, 2nd slot, has first 2 items
 	var unlock_ids = [
 		{"UnlockID": "115"}
@@ -22,7 +22,7 @@ module.exports = function(req, res, next) {
 		pageKey += "_" + mode;
 	}
     PlayerProgress.FetchPlayerProgressData(profileid, pageKey).then(function(progress_data) {
-			if(progress_data == null) return next(ErrorRespondeInstance.NoDataError());
+			if(progress_data == null) return next(ErrorResponseInstance.NoDataError());
 			var player_data = Object.assign({nick: progress_data.subaccount, subaccount: progress_data.nick}, progress_data);
 			if(req.query.pid) {
 				PlayerProgress.FetchPlayerProgressData(parseInt(req.query.pid), pageKey).then(function(lookup_data) {

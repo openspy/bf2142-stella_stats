@@ -52,7 +52,6 @@ ResponseWriter.prototype.sendResponse = function(res, data) {
 		}
 		res.write('$\t' + total + '\t$');
 	}
-
 	res.end();
 };
 

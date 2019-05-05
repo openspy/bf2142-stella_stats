@@ -2,9 +2,6 @@ var Leaderboard = new (require('../../OpenSpy/Leaderboard'))({namespaceid: globa
 var PlayerProgress = new (require('../../OpenSpy/PlayerProgress'))({namespaceid: global.PROFILE_NAMESPACEID, partnercode: global.PARTNERCODE});
 //&ccFilter=US&buddiesFilter=10017,11012,11589&dogTagFilter=1
 
-const ErrorResponse = require('../../API/ErrorResponse');
-const ErrorRespondeInstance = new ErrorResponse;
-
 function filterPids(filter, pids) {
     var split_pids = filter.split(',');
     var result = [];
@@ -47,7 +44,7 @@ module.exports = function(req, res, next) {
                     resolve(results.data[0]);
                 }
                 
-            });
+            }, next);
         });
     }
     var handleResults = function(self_player, progress_data) {
@@ -80,7 +77,7 @@ module.exports = function(req, res, next) {
         leaderboardOptions.filterData = {};
         leaderboardOptions.filterData.pid = [pid];
         return fetchCurrentPlayer().then(function(playerData) {
-            return Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, playerData));
+            return Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, playerData), next);
         });
         /*return Leaderboard.FetchLeaderboardData(leaderboardOptions).then(function(playerData) {
             if(playerData == null || playerData.data == null || playerData.data.length == 0) {
@@ -103,8 +100,8 @@ module.exports = function(req, res, next) {
                     pids = filterPids(req.query.buddiesFilter, pids);
                 }
                 leaderboardOptions.filterData.pid = pids;
-                Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, playerData));
-            });
+                Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, playerData), next);
+            }, next);
         } else {
             if(req.query.buddiesFilter) {
                 if(leaderboardOptions.filterData === undefined)
@@ -119,5 +116,5 @@ module.exports = function(req, res, next) {
             }
             Leaderboard.FetchLeaderboardData(leaderboardOptions).then(handleResults.bind(null, playerData));
         }  
-    })
+    }, next)
 };
