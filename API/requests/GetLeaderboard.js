@@ -34,7 +34,12 @@ module.exports = function(req, res, next) {
                         var result = {};
                         result.pid = req.profile.id;
                         result.nick = req.profile.uniquenick;
-                        result.playerrank = ""+(playerProgress.rnk || "0");
+                        if(playerProgress) {
+                            result.playerrank = ""+(playerProgress.rnk || "0");
+                        } else {
+                            result.playerrank = "0";
+                        }
+                        
                         result.countrycode = req.profile.countrycode || "US";
                         result.rank = "0";
                         result.Vet = "0";
