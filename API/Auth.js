@@ -2,6 +2,9 @@ var Profile = new (require('../OpenSpy/Profile'))();
 var Session = new (require('../OpenSpy/Session'))();
 var EACrypter = require('../EACrypter');
 
+const ErrorResponse = require('../API/ErrorResponse');
+const ErrorResponseInstance = new ErrorResponse;
+
 function Auth() {
     this.crypter = new EACrypter();
 }
@@ -13,8 +16,8 @@ Auth.prototype.registerMiddleware = function(req, res, next) {
         req.profile = null;
         return next();
     }
-    
-    if(req.queryParams.auth.length == 24) {
+
+    if(req.queryParams.auth.length == 26) {
         if( /[^a-fA-F0-9]/.test( req.queryParams.auth ) == false ) {
             return Profile.getProfileById(parseInt(req.queryParams.pid)).then(function(profile) {
                 Session.TestSessionByUserId(profile.userid, req.queryParams.auth).then(function(valid) {
@@ -43,7 +46,7 @@ Auth.prototype.registerMiddleware = function(req, res, next) {
             Session.TestSessionByUserId(req.profile.user.id, req.queryParams.gsa).then(function(valid) {
                 
                 if(!valid) {
-                    return next(ErrorResponse.InvalidSessionError());
+                    return next(ErrorResponseInstance.InvalidSessionError());
                 }
                 req.session_valid = true;
                 next();
