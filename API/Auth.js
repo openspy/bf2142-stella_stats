@@ -17,7 +17,7 @@ Auth.prototype.registerMiddleware = function(req, res, next) {
         return next();
     }
 
-    if(req.queryParams.auth.length == 26) {
+    if(req.queryParams.auth.length == 24) {
         if( /[^a-fA-F0-9]/.test( req.queryParams.auth ) == false ) {
             return Profile.getProfileById(parseInt(req.queryParams.pid)).then(function(profile) {
                 Session.TestSessionByUserId(profile.userid, req.queryParams.auth).then(function(valid) {
