@@ -4,7 +4,12 @@ function ResponseWriter() {
 
 
 ResponseWriter.prototype.sendError = function(res, error) {
-	console.error(error);
+	if(error.responseCode == 200) {
+		console.warn(error);
+	} else {
+		console.error(error);
+	}
+	
 	var total = 0;
 	var send_str = "E\t" + (error.responseCode || 999) + "\n";
 	res.status(error.statusCode);
