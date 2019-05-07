@@ -4,18 +4,20 @@ function ResponseWriter() {
 
 
 ResponseWriter.prototype.sendError = function(res, error) {
+	console.error(error);
 	var total = 0;
 	var send_str = "E\t" + (error.responseCode || 999) + "\n";
 	res.status(error.statusCode);
-	res.write(send_str); total += send_str.length;
-	res.write('$\t' + total + '\t$');
-	res.end();
+	total += send_str.length;
+	send_str += '$\t' + total + '\t$';
+	res.send(send_str).end();
 };
 
 ResponseWriter.prototype.sendResponse = function(res, data) {
 	var total = 0;
+	var out_buff = "";
 	if(data.length > 0 && data[0].length > 0) {
-		res.write('O\n'); total += 2;
+		out_buff += 'O\n';
 		for(var i = 0;i<data.length;i++) {
 			if(data[i].length > 0) {
 				
@@ -33,26 +35,27 @@ ResponseWriter.prototype.sendResponse = function(res, data) {
 
 				var keys = Object.keys(data[i][largest_keys_index]);
 				
-				res.write('H\t'); total += 2;
+				out_buff += 'H\t';
 				for(var k=0;k<keys.length;k++) {
 					var key_string = keys[k] + '\t';
-					res.write(key_string); total += key_string.length;
+					out_buff += key_string;
 				}
-				res.write('\n'); total += 2;
+				out_buff += '\n';
 				if(data[i][0][keys[0]] == null) continue;
 				for(var j=0;j<data[i].length;j++) {
-					res.write('D\t'); total += 2;
+					out_buff += 'D\t';
 					for(var k=0;k<keys.length;k++) {
 						var key_string = data[i][j][keys[k]] + '\t';
-						res.write(key_string); total += key_string.length;
+						out_buff += key_string;
 					}
-					res.write('\n'); total ++;
+					out_buff += '\n';
 				}
 			}
 		}
-		res.write('$\t' + total + '\t$');
+		total = out_buff.length;
+		out_buff += '$\t' + total + '\t$';
 	}
-	res.end();
+	res.send(out_buff).end();
 };
 
 ResponseWriter.prototype.registerMiddleware = function(req, res, next) {
