@@ -69,8 +69,8 @@ ErrorResponse.prototype.NoDataError = function(original_error) {
     Error.captureStackTrace(this, this.constructor);
     var errorData = {};
     errorData.statusCode = 200;
-    errorData.responseCode = 112;
-    errorData.errorMessage = "No data available";
+    errorData.responseCode = 104;
+    errorData.errorMessage = "No Data";
     return errorData;
 }
 module.exports = ErrorResponse;
