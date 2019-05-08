@@ -54,7 +54,7 @@ ResponseWriter.prototype.sendResponse = function(res, data, opening) {
 				for(var j=0;j<data[i].length;j++) {
 					out_buff += 'D\t'; total++;
 					for(var k=0;k<keys.length;k++) {
-						var key_data = (data[i][j][keys[k]] || "0");
+						var key_data = (data[i][j][keys[k]] || 0).toString();
 						var key_string = key_data + '\t'; total += key_data.length;
 						out_buff += key_string;
 					}
