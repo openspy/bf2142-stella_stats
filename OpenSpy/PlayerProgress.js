@@ -15,7 +15,7 @@ PlayerProgress.prototype.FetchPlayerProgressData = function(profileid, pageKey) 
             json: true
         };
             request.post(options).then(function(response) {
-            if(!response || response.length == 0  || !response[0].data) {
+            if(!response || !response.data || response.data.length == 0  || !response[0].data) {
                 return resolve(null);
             }
             resolve(response[0].data);

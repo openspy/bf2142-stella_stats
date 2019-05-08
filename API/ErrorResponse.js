@@ -57,6 +57,7 @@ ErrorResponse.prototype.NotFoundError = function() {
     return errorData;
 }
 ErrorResponse.prototype.SystemError = function(original_error) {
+    console.error(original_error);
     Error.captureStackTrace(this, this.constructor);
     var errorData = {};
     errorData.statusCode = 500;

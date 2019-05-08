@@ -62,7 +62,7 @@ module.exports = function(req, res, next) {
         }
 
         var send_entries = [[{"size": progress_data.total, "asof":req.currentTime}]];
-        if(self_player != null) {
+        if(self_player != null) {var Leaderboard = new (require('../../OpenSpy/Leaderboard'))({namespaceid: global.PROFILE_NAMESPACEID, partnercode: global.PARTNERCODE});
             send_entries.push([self_player]);
         }
         send_entries.push(send_results);

@@ -12,6 +12,11 @@ module.exports = function(req, res, next) {
 		,{"UnlockID": "516"}
 		,{"UnlockID": "525"}
 	];
-	var send_entries = [[{"asof":req.currentTime,"pid":req.profile.id, "nick": req.profile.uniquenick}], [{"AvCred": "0"}], unlock_ids];
+	var default_info = {"pid": 0, "nick": "Stub Account"};
+	if(req.profile) {
+		default_info.nick = req.profile.uniquenick;
+		default_info.pid = req.profileid;
+	}
+	var send_entries = [[{"asof":req.currentTime,"pid":default_info.pid, "nick": default_info.nick}], [{"AvCred": "0"}], unlock_ids];
 	req.sendResponse(res, send_entries);
 };
