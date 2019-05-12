@@ -34,7 +34,7 @@ Auth.prototype.registerMiddleware = function(req, res, next) {
     auth_buf = this.crypter.DecryptBlock(this.crypter.DecodeBuffer(req.queryParams.auth));
     req.profileid = auth_buf.readUInt32LE(8);
 
-    var test_auth_session = req.queryParams.gsa !== undefined;
+    var test_auth_session = req.queryParams.gsa !== undefined && req.queryParams.gsa.length > 0;
     
     req.currentTime = Math.floor(Date.now()/1000).toString(); //XXX: MOVE THIS
     
