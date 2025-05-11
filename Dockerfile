@@ -1,6 +1,6 @@
 FROM node:latest as BUILD
 WORKDIR /app
-COPY *.js *.json .
+COPY . /app
 RUN npm install
 FROM node:latest
 WORKDIR /app
